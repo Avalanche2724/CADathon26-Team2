@@ -3,8 +3,10 @@ package frc.robot;
 
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.AutoCommand;
+import frc.robot.commands.VisionAlignCommand;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,6 +19,7 @@ public class RobotContainer {
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final PivotSubsystem pivotSubsystem = new PivotSubsystem();
+  private final VisionSubsystem visionSubsystem = new VisionSubsystem();
 
   private final CommandXboxController driverController = new CommandXboxController(
       Constants.OperatorConstants.DRIVER_CONTROLLER_PORT);
@@ -67,6 +70,10 @@ public class RobotContainer {
             () -> pivotSubsystem.lower(),
             () -> pivotSubsystem.stop(),
             pivotSubsystem));
+
+    // Automatically align with a reflective target while left bumper is held
+    driverController.leftBumper().whileTrue(
+        VisionAlignCommand.align(visionSubsystem, swerveSubsystem));
   }
 
   // Return autonomous routine
