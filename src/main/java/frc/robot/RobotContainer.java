@@ -2,6 +2,7 @@
 package frc.robot;
 
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.commands.AutoCommand;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 
@@ -14,9 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class RobotContainer {
 
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
-
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-
   private final PivotSubsystem pivotSubsystem = new PivotSubsystem();
 
   private final CommandXboxController driverController = new CommandXboxController(
@@ -70,7 +69,8 @@ public class RobotContainer {
             pivotSubsystem));
   }
 
+  // Return autonomous routine
   public Command getAutonomousCommand() {
-    return null;
+    return AutoCommand.driveForward(swerveSubsystem);
   }
 }
